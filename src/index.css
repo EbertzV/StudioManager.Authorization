@@ -1,0 +1,65 @@
+.agendaSemana{
+    border: 2px solid black;
+}
+
+.diaSemana {
+    border: 1px solid black;
+    width: fit-content;
+    display: inline-block;
+    margin: 0px;
+    padding: 0px;
+}
+
+.diaSemanaHeader{
+    text-align: center;
+    background-color: black;
+    color: white;
+    padding: 0.6em 0em 0.5em 0em;
+}
+
+    .diaSemanaHeader p {
+        font-weight: lighter;
+        font-size: small;
+        margin: 0px;
+        padding: 0px;
+        margin: 0px;
+        border: 0px;
+    }
+
+    .diaSemanaHeader h3{
+        font-family: "Arial";
+        margin: 0px;
+        padding: 0px;
+        border: 0px;
+        margin: 0em 0em 0em 0em;
+    }
+
+.horarioLivre {
+    background-color: cadetblue;
+    padding: 0.3em 1em 0.2em 1em;
+    border: 2px;
+    border-style: groove;
+}
+
+.horarioLivre:hover{
+    border-style: outset;
+}
+
+.horarioLivre:active{
+    border-style: inset;
+}
+
+.horarioOcupado {
+    background-color: lightgrey;
+    padding: 0.3em 1em 0.2em 1em;
+    border: 2px;
+    border-style: groove;
+}
+
+.horarioOcupado:hover{
+    border-style: outset;
+}
+
+.horarioOcupado:active{
+    border-style:inset;
+}

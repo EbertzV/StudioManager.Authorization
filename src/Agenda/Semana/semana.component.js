@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function Semana() {
     const [dia, setDia] = useState('2023-12-12');
@@ -7,23 +7,33 @@ export default function Semana() {
         setDia(e.target.value)
     }
 
-    const [diasDaSemana, setDiasDaSemana] = useState([
-        {
-            dia: "2023-12-11",
-            diaDaSemana: "segunda-feira",
-            inicio: "08:00",
-            fim: "22:00",
-            reservas: [
-                {
-                    "id": 1,
-                    "idCliente": 1,
-                    "nome": "Mateus Braga",
-                    "inicio": "08:00",
-                    "fim": "09:00"
-                }
-            ]
-        }
-    ]);
+    const definirEstiloCelula = function (status) {
+        if (status === 'ocupado')
+            return "horarioOcupado";
+        else if (status === 'livre')
+            return "horarioLivre";
+        else return "";
+    }
+
+    const [diasDaSemana, setDiasDaSemana] = useState(null);
+    const diasDaSemanaAlterados = function (data) {
+        setDiasDaSemana(data);
+    };
+
+    useEffect(() => {
+        fetch('http://localhost:5113/api/ReservasPorSemana?referencia=' + dia + '&diasParaFrente=6')
+            .then(res => {
+                return res.json();
+            }, err => {
+                console.log(err);
+            })
+            .then(data => {
+                diasDaSemanaAlterados(data)
+                console.log(diasDaSemana)
+            }, err => {
+                console.log(err);
+            })
+    }, []);
 
     return (
         <>
@@ -31,13 +41,16 @@ export default function Semana() {
             <p>{dia}</p>
             <div className="agendaSemana">
                 {
-                    diasDaSemana.map(d=> 
-                        <div key={d.dia}>
-                            <h3>{d.diaDaSemana}</h3>
+                    diasDaSemana.map(d => 
+                        <div key={d.dia} className="diaSemana">
+                            <div className="diaSemanaHeader">
+                                <h3>{d.diaDaSemana}</h3>
+                                <p>{d.dia}</p>
+                            </div>
                             {
-                                d.reservas.map(r => 
-                                    <div key={r.id}>
-                                        <p>{r.inicio} as {r.fim}: {r.nome}</p>
+                                d.reservas.map(r =>
+                                    <div key={r.id} className={ definirEstiloCelula(r.status) }>
+                                        <p>{r.inicio} as {r.fim}: {r.status}</p>
                                     </div>
                                 )
                             }

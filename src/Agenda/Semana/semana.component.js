@@ -15,10 +15,11 @@ export default function Semana() {
         else return "";
     }
 
-    const [diasDaSemana, setDiasDaSemana] = useState(null);
     const diasDaSemanaAlterados = function (data) {
         setDiasDaSemana(data);
-    };
+    }
+
+    const [diasDaSemana, setDiasDaSemana] = useState([]);
 
     useEffect(() => {
         fetch('http://localhost:5113/api/ReservasPorSemana?referencia=' + dia + '&diasParaFrente=6')
@@ -29,11 +30,10 @@ export default function Semana() {
             })
             .then(data => {
                 diasDaSemanaAlterados(data)
-                console.log(diasDaSemana)
             }, err => {
                 console.log(err);
             })
-    }, []);
+    }, [dia]);
 
     return (
         <>
